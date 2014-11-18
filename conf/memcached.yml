@@ -1,0 +1,24 @@
+local:
+  host: 'localhost:11211'
+  namespace: 'mc_cache'
+  compress: true
+
+development:
+  host: 'localhost:11211'
+  namespace: 'mc_cache'
+  compress: true
+
+test:
+  host: 'localhost:11211'
+  namespace: 'mc_cache'
+  compress: true
+
+stage:
+  host: 'localhost:11211'
+  namespace: 'mc_cache'
+  compress: true
+
+production:
+  host: 'localhost:11211'
+  namespace: 'mc_cache'
+  compress: true

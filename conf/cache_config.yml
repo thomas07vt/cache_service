@@ -1,0 +1,20 @@
+production:
+  # This is just example. You can use Rails.cache or whatever cache, as long as it implements read/write/delete
+  cache:  'Rails.cache'   # Can be different cache for different environment or app
+  logger: 'Rails.logger' # Can be different logger for different environment or app
+
+local:
+  cache:  'McCache'
+  logger: 'SdkLogger.logger'
+
+stage:
+  cache:  'McCache'
+  logger: 'SdkLogger.logger'
+
+development:
+  cache:  'McCache'
+  logger: 'SdkLogger.logger'
+
+test:
+  cache:  'McCache'
+  logger: 'SdkLogger.logger'
