@@ -14,8 +14,8 @@ class CacheService
       config = ConfigService.load_config('cache_config.yml')[ConfigService.environment]
       # Load all the existing caches in the system, outside of the gem
       Dir.glob("#{File.expand_path('.')}/caches/*.rb").each { |rb_file| require rb_file }
-      @@cache ||= Object.const_get(config['cache'])
-      SdkLogger.logger = Object.const_get(config['logger']) if config['logger'].present?
+      @@cache ||= eval(config['cache'])
+      SdkLogger.logger = eval(config['logger']) if config['logger'].present?
     rescue => error
       @@cache ||= McCache
     end
