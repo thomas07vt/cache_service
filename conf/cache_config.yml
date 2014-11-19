@@ -4,17 +4,17 @@ production:
   logger: 'Rails.logger' # Can be different logger for different environment or app
 
 local:
-  cache:  'McCache'
+  cache:  'McCache' # memcached
   logger: 'SdkLogger.logger'
 
 stage:
-  cache:  'McCache'
+  cache:  'ZkCache' # Zookeeper
   logger: 'SdkLogger.logger'
 
 development:
-  cache:  'McCache'
+  cache:  'ZkCache' # Zookeeper
   logger: 'SdkLogger.logger'
 
 test:
-  cache:  'McCache'
+  cache:  'McCache' # memcached
   logger: 'SdkLogger.logger'

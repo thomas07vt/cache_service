@@ -32,6 +32,7 @@ GEM
     thread_safe (0.3.4)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    zookeeper (1.4.9)
 
 PLATFORMS
   ruby
@@ -41,3 +42,4 @@ DEPENDENCIES
   dalli
   logging
   rspec
+  zookeeper

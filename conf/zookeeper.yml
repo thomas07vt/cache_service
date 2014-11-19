@@ -1,0 +1,14 @@
+local:
+  host: 'localhost:2181'
+
+development:
+  host: 'localhost:2181'
+
+test:
+  host: 'localhost:2181'
+
+stage:
+  host: 'localhost:2181'
+
+production:
+  host: 'localhost:2181'

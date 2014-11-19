@@ -1,4 +1,5 @@
 require_relative './config_service'
+require_relative './sdk_logger'
 
 class CacheService
   class << self

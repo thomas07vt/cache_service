@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'cache_service'
-  s.version     = '1.0.1'
+  s.version     = '1.0.2'
   s.summary     = "A gem for cache facility"
   s.description = "A gem for cache facility"
   s.authors     = ['Linh Chau']
@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.files       = [
                     './cache_service.gemspec', 'lib/cache_service.rb',
                     'lib/services/config_service.rb', 'lib/services/cache_service.rb', 'lib/services/sdk_logger.rb',
-                    'lib/caches/mc_cache.rb'
+                    'lib/caches/mc_cache.rb', 'lib/caches/zk_cache.rb'
                   ]
   s.homepage    = 'https://github.com/linhchauatl/cache_service'
   s.license     = 'MIT'

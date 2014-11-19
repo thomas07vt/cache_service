@@ -10,12 +10,18 @@ It can be used with any caching mechanism, as long as the caching mechanism impl
 ```
 
 ### Built-in cache support
-This gem comes with built-in [**memcached**](http://memcached.org/) support:
-- [**mc_cache.rb**](https://github.com/linhchauatl/cache_service/blob/master/lib/caches/mc_cache.rb)
+This gem comes with built-in [**memcached**](http://memcached.org/)  and [**Zookeeper**](http://zookeeper.apache.org) support:<br/>
+**1 - Memcached:** [**mc_cache.rb**](https://github.com/linhchauatl/cache_service/blob/master/lib/caches/mc_cache.rb)
 
 In order to use the built-in memcached support, you must have:
 - [**memcached**](http://memcached.org/) running on your local machine or on a network that your application can access.
 - Modify the file [**memcached.yml**](https://github.com/linhchauatl/cache_service/blob/master/conf/memcached.yml) to suit your server layout and put the file in the directory **conf** or **config** of your application.
+
+**2 - Zookeeper:** [**zk_cache.rb**](https://github.com/linhchauatl/cache_service/blob/master/lib/caches/zk_cache.rb)
+In order to use the built-in Zookeeper support, you must have:
+- [**Zookeeper**](http://zookeeper.apache.org) running on your local machine or on a network that your application can access.
+- Modify the file [**zookeeper.yml**](https://github.com/linhchauatl/cache_service/blob/master/conf/zookeeper.yml) to suit your server layout and put the file in the directory **conf** or **config** of your application.
+
 
 ### Usage
 In the **Gemfile** of your application, write:<br/>
