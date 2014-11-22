@@ -2,6 +2,12 @@ require_relative('../rspec_helper')
 
 describe ZkCache do
   before :all do
+    ZkCache.initialize
+    raise 'You must have Zookeeper installed somewhere to run the tests' unless ZkCache.client
+  end
+
+  before :each do
+    ZkCache.initialize
     @client = ZkCache.client
   end
 
@@ -12,10 +18,10 @@ describe ZkCache do
       expect(ZkCache.client).not_to be_nil 
     end
 
-    it 'initializes the zookeeper client to local host default if error happens' do
-      allow(ConfigService).to receive(:load_config).and_raise('Something wrong')
+    it 'initializes the zookeeper client to nil if error happens' do
+      allow(ZkCache).to receive(:cache_exists?).and_raise('Something wrong')
       ZkCache.initialize
-      expect(ZkCache.client).not_to be_nil 
+      expect(ZkCache.client).to be_nil 
     end
   end
 
@@ -23,6 +29,11 @@ describe ZkCache do
     it 'writes data to zookeeper' do
       ZkCache.write('/test_key', 'Some data')
       expect(@client.get(path: '/test_key')[:data]).to eql('Some data')
+    end
+
+    it 'returns nil if ZkCache.client is nil' do
+      expect(ZkCache).to receive(:client).and_return(nil)
+      expect(ZkCache.write('test_key', 'Some data')).to be_nil
     end
   end
 
@@ -41,6 +52,11 @@ describe ZkCache do
       sleep 3
       expect(ZkCache.read('/test_key')).to be_nil
     end
+
+    it 'returns nil if ZkCache.client is nil' do
+      expect(ZkCache).to receive(:client).and_return(nil)
+      expect(ZkCache.read('test_key')).to be_nil
+    end
   end
 
   context 'delete' do
@@ -54,6 +70,11 @@ describe ZkCache do
     it 'returns nil if the key does not exist' do
       deleted = ZkCache.delete('/does_not_exist_test_key')
       expect(deleted).to eql(nil)
+    end
+
+    it 'returns nil if ZkCache.client is nil' do
+      expect(ZkCache).to receive(:client).and_return(nil)
+      expect(ZkCache.delete('test_key')).to be_nil
     end
   end
 
@@ -87,6 +108,6 @@ describe ZkCache do
   end
   
   after :each do
-    @client.delete(path: '/test_key')
+    @client.delete(path: '/test_key') if @client
   end
 end

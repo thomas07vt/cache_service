@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'cache_service'
-  s.version     = '1.0.2'
+  s.version     = '1.0.4'
   s.summary     = "A gem for cache facility"
   s.description = "A gem for cache facility"
   s.authors     = ['Linh Chau']

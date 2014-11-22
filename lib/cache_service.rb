@@ -9,14 +9,8 @@ rescue Exception => error
   # Who cares?
 end
 
-def proc_dir(dir)
-  Dir[ File.join(dir, '**', '*') ].reject { |p| File.directory? p }
-end
-
-
-proc_dir('.').reject { |p| !p.ends_with?('.rb') }.each do |rb_file|
-  unless (rb_file == './lib/cache_service.rb' || rb_file.starts_with?('./spec/'))
-    require rb_file
-    puts "require #{rb_file}"
-  end
+['caches', 'services'].each do |sub_path|
+  load_gem_lib(sub_path)
+  rb_files =  Dir.glob("#{File.expand_path('.')}/lib/#{sub_path}/*.rb")
+  rb_files.each { |rb_file| require rb_file }  
 end

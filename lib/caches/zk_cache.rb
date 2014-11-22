@@ -10,17 +10,31 @@ class ZkCache
     end
 
     def initialize
-      config = ConfigService.load_config('zookeeper.yml')[ConfigService.environment]
-      @@client ||= Zookeeper.new(config['host'])
-    rescue => error
-      SdkLogger.logger.error("ZkCache.initialize error: #{error.message}")
-      @@client ||= Zookeeper.new('localhost:2181')
+      @@config ||= ConfigService.load_config('zookeeper.yml')[ConfigService.environment]
+      @@client ||= Zookeeper.new(@@config['host'])
+      cache_exists?
+    rescue Exception => error
+      puts("ZkCache.initialize error: #{error.message}")
+      @@client = nil
     end #initialize
 
+    def cache_exists?
+    #   @@client.read('test')
+    # rescue Exception => error
+    #   @@client = nil
+      Net::HTTP.get(URI("http://#{@@config['host']}"))
+    rescue Errno::ECONNREFUSED => error
+      puts "**** Error: #{error.message}"
+      @@client = nil
+    rescue EOFError => error
+      # do nothing
+    end
 
     # Cache API, mimics ActiveSupport::Cache::Store
     # http://api.rubyonrails.org/classes/ActiveSupport/Cache/Store.html
     def read(key, options = {})
+      return unless client
+
       key = process_key(key)
       result = client.get(path: key)[:data]
       result = decode_data(result)
@@ -37,6 +51,8 @@ class ZkCache
     end
 
     def write(key, value, options = {})
+      return unless client
+
       key = process_key(key)
       init_key(key, nil)
       written_value = value
@@ -53,6 +69,8 @@ class ZkCache
     end
 
     def delete(key, options = {})
+      return unless client
+
       key = process_key(key)
       deleted = read(key)
       client.delete(path: key)

@@ -17,19 +17,23 @@ class CacheService
       Dir.glob("#{File.expand_path('.')}/caches/*.rb").each { |rb_file| require rb_file }
       @@cache ||= eval(config['cache'])
       SdkLogger.logger = eval(config['logger']) if config['logger'].present?
-    rescue => error
-      @@cache ||= McCache
+    rescue Exception => error
+      puts("Error #{error.message}")
+      @@cache = nil
     end
 
     def read(key, options = {})
+      return nil unless cache
       cache.read(key, options)
     end
 
     def write(key, value, options = {})
+      return nil unless cache
       cache.write(key, value, options)
     end
 
     def delete(key, options = {})
+      return nil unless cache
       cache.delete(key, options)
     end
   end #class methods
