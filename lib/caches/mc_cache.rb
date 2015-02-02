@@ -1,4 +1,6 @@
 require 'dalli'
+require 'net/http'
+require 'net/https'
 
 class McCache
   class << self

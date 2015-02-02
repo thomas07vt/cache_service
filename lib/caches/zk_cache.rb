@@ -1,6 +1,8 @@
 require 'active_support'
 require 'active_support/core_ext'
 require 'zookeeper'
+require 'net/http'
+require 'net/https'
 
 class ZkCache
   class << self
@@ -24,7 +26,7 @@ class ZkCache
     #   @@client = nil
       Net::HTTP.get(URI("http://#{@@config['host']}"))
     rescue Errno::ECONNREFUSED => error
-      puts "**** Error: #{error.message}"
+      puts "Could not connect to Zookeeper: #{error.message}"
       @@client = nil
     rescue EOFError => error
       # do nothing

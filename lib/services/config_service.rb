@@ -14,7 +14,7 @@ class ConfigService
         end
       end
       
-      raise("You must have the file #{config_file_name} in either 'conf' or 'config' directory of your application") unless config_file
+      raise("NON-Fatal: #{config_file_name} file not found. Ignoring cache type.") unless config_file
 
       YAML.load_file(config_file)
     end
